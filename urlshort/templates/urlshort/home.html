@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+</head>
+<body>
+    <h1>URL Shortener</h1>
+
+    <h2>Stored URLs:</h2>
+    <ul>
+        {% for url in urls %}
+            <li>
+                <a href="/{{ url.short_url }}">
+                    {{ url.short_url }}
+                </a>
+                → {{ url.long_url }}
+            </li>
+        {% empty %}
+            <p>No URLs stored yet.</p>
+        {% endfor %}
+    </ul>
+
+    <h2>Shorten a New URL:</h2>
+    <form method="post" action="{% url 'shorten_url' %}">
+        {% csrf_token %}
+        <label for="long_url">Enter URL:</label>
+        <input type="url" id="long_url" name="long_url" placeholder="https://example.com" required>
+        <button type="submit">Shorten</button>
+    </form>
+</body>
+</html>
